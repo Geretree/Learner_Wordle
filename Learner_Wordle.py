@@ -231,6 +231,8 @@ while True:
             sys.exit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
+                state = "menu"
+            elif event.key == pygame.K_DELETE:
                 pygame.quit()
                 sys.exit()
 
