@@ -1,3 +1,4 @@
 ## Install Pygame
-1. Go to Python Packages
-2. Install the latest Version of Pygame
+1. Open Pycharm
+2. Go to Python Packages
+3. Install the latest Version of Pygame
