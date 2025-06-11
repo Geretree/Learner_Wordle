@@ -2,6 +2,9 @@ import pygame
 import random
 import sys
 import json
+import pyperclip
+import os
+
 
 pygame.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -21,9 +24,18 @@ titel_eingabe = ""
 wort_hinweis_eingabe = ""
 active_input = None
 
+def resource_path(relative_path):
+    """Gibt den absoluten Pfad zurück, auch wenn PyInstaller das Programm packt."""
+    if hasattr(sys, '_MEIPASS'):
+        # Im gepackten Zustand ist _MEIPASS der temporäre Ordner mit allen Dateien
+        return os.path.join(sys._MEIPASS, relative_path)
+    # Beim normalen Ausführen ist der Pfad relativ zum Skript
+    return os.path.join(os.path.abspath(os.path.dirname(__file__)), relative_path)
 
 
-with open("hinweise.json", "r", encoding="utf-8") as f:
+pfad = resource_path('hinweise/hinweise.json')
+
+with open(pfad, 'r', encoding='utf-8') as f:
     woerterbuecher = json.load(f)
 
 
@@ -127,7 +139,12 @@ def zeichne_creat_fenster():
         screen.blit(zeilentext, (55, 165 + i * 25))
 
     # Save-Button
-    return zeichne_button("SAVE", 50, 380, 200, 50)
+    save_button = zeichne_button("SAVE", 50, 380, 200, 50)
+
+    # Dummy Button rechts neben Textbox
+    paste_button = zeichne_button("Paste", 660, 160, 120, 50)
+
+    return save_button, paste_button
 
 
 
@@ -254,16 +271,26 @@ while True:
                     if titel_eingabe:
                         if titel_eingabe not in woerterbuecher:
                             woerterbuecher[titel_eingabe] = {}
+                        zeilen = wort_hinweis_eingabe.split("\n")
+                        for i, zeile in enumerate(zeilen):
+                            if zeile.strip() == "":
+                                zeile = " "  # Leerzeichen statt leerer String
+                            zeilentext = SMALL_FONT.render(zeile, True, BLACK)
+                            screen.blit(zeilentext, (55, 165 + i * 25))
                         for zeile in wort_hinweis_eingabe.split("\n"):
                             if "," in zeile:
                                 wort, hinweis = map(str.strip, zeile.split(",", 1))
                                 woerterbuecher[titel_eingabe][wort] = hinweis
 
                         # JSON speichern
-                        with open("hinweise.json", "w", encoding="utf-8") as f:
+                        with open(pfad, "w", encoding="utf-8") as f:
                             json.dump(woerterbuecher, f, indent=4, ensure_ascii=False)
 
                         wort_hinweis_eingabe = ""  # Eingabe zurücksetzen
+                elif pygame.Rect(660, 160, 120, 50).collidepoint(event.pos):
+
+                    clipboard_text = pyperclip.paste()
+                    wort_hinweis_eingabe += clipboard_text
 
             if event.type == pygame.KEYDOWN:
                 if active_input == "titel":
@@ -278,6 +305,8 @@ while True:
                         wort_hinweis_eingabe += "\n"
                     elif event.unicode.isprintable():
                         wort_hinweis_eingabe += event.unicode
+
+
 
     if state == "spiel" and (geraten or len(versuche) >= max_versuche):
             if event.type == pygame.MOUSEBUTTONDOWN:
