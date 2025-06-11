@@ -207,7 +207,10 @@ woerterbuecher = {
         "DynamoDB": "Wähle flexible Leistungsoptionen, um Kosten und Kapazität optimal zu steuern.",
         "SaaS": "Diese Cloud-Lösung liefert komplett fertige Anwendungen, die du direkt über das Internet nutzen kannst, ohne dich um Infrastruktur oder Wartung kümmern zu müssen.",
         "PaaS": "Hier bekommst du eine Entwicklungsumgebung und Tools in der Cloud, um Anwendungen zu programmieren und zu betreiben, ohne Server und Netzwerke selbst verwalten zu müssen.",
-        "IaaS": "Dieses Modell stellt dir virtuelle Maschinen, Netzwerke und Speicher in der Cloud bereit, damit du Betriebssysteme und Anwendungen komplett selbst konfigurieren kannst."
+        "IaaS": "Dieses Modell stellt dir virtuelle Maschinen, Netzwerke und Speicher in der Cloud bereit, damit du Betriebssysteme und Anwendungen komplett selbst konfigurieren kannst.",
+        "Pay-as-you-go": "Du bezahlst nur für das, was du tatsächlich nutzt – ganz ohne langfristige Verpflichtungen oder Mindestgebühren.",
+        "Reserved Instances": "Du verpflichtest dich für einen längeren Zeitraum und bekommst dafür günstigere Preise im Vergleich zur nutzungsbasierten Abrechnung.",
+        "Spot Instances": "Hier kaufst du ungenutzte Kapazitäten besonders günstig, aber die können jederzeit wieder entzogen werden, wenn die Nachfrage steigt."
     }
 }
 
